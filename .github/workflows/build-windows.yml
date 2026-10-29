@@ -120,7 +120,8 @@ jobs:
           cp -r "$gen/." "$stage/dawn/include"
           cp "$skia/LICENSE" "$stage/LICENSE_SKIA"
           cp "$skia/third_party/externals/dawn/LICENSE" "$stage/LICENSE_DAWN"
-          tar -czf "$RUNNER_TEMP/skia-binaries.tar.gz" -C "$RUNNER_TEMP/stage" skia-binaries
+          # --force-local: GNU tar reads the D: of a Windows path as a remote host.
+          tar --force-local -czf "$RUNNER_TEMP/skia-binaries.tar.gz" -C "$RUNNER_TEMP/stage" skia-binaries
 
       - name: Release
         env:
