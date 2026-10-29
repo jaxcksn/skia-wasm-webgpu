@@ -80,6 +80,9 @@ jobs:
           sed -i '/"libcpmt.lib",/d' third_party/dawn/BUILD.gn
           grep -q 'MultiThreadedDLL' third_party/dawn/cmake_utils.py
           grep -q 'ABSL_MSVC_STATIC_RUNTIME=OFF' third_party/dawn/cmake_utils.py
+          # No C++20 module interface: CMake can't scan clang-cl's module imports, and nothing here uses it.
+          sed -i 's/"-DDAWN_ENABLE_INSTALL=OFF",/"-DDAWN_ENABLE_INSTALL=OFF", "-DDAWN_SUPPORTS_CXX_MODULES=OFF", "-DCMAKE_CXX_SCAN_FOR_MODULES=OFF",/' third_party/dawn/build_dawn.py
+          grep -q 'DAWN_SUPPORTS_CXX_MODULES=OFF' third_party/dawn/build_dawn.py
 
       - name: Build skia-bindings
         run: |
