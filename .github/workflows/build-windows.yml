@@ -46,7 +46,7 @@ jobs:
           # Short paths: Dawn's and abseil's sources run deep.
           git clone --depth 1 --branch "$SKIA_TAG" https://github.com/rust-skia/skia.git C:/skia
           cd C:/skia
-          python tools/git-sync-deps
+          GIT_SYNC_DEPS_SKIP_EMSDK=1 python tools/git-sync-deps
           python bin/fetch-gn
           # Dawn and what its CMake build reads (third_party/dawn/cmake_utils.py), at upstream chrome/m153's pins.
           while read -r name url; do
